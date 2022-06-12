@@ -12,6 +12,8 @@ body {
   font-family: 'Georgia', sans-serif;
   line-height: 1.5;
   letter-spacing: 0.02em;
+
+  background-color: #343a40;
 }
 
 code {
