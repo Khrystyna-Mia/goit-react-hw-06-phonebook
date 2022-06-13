@@ -27,14 +27,33 @@ const ContactForm = () => {
     }
   };
 
+  const checkRepeatName = name => {
+    return contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+  };
+
+  const checkRepeatNumber = number => {
+    return contacts.find(contact => contact.number === number);
+  };
+
+  const checkValidNumber = number => {
+    return !/\d{3}[-]\d{2}[-]\d{2}/g.test(number);
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (contacts.find(contact => contact.name === name)) {
+    if (checkRepeatName(name)) {
       Notify.info(`🙄 This ${name} is already in contacts`);
+    } else if (checkRepeatNumber(number)) {
+      Notify.info(`🙄 This ${number} is already in contacts`);
+    } else if (checkValidNumber(number)) {
+      Notify.failure(`😔 Please, enter the correct number phone`);
+    } else {
+      dispatch(addContact({ name, number }));
     }
 
-    dispatch(addContact({ name, number }));
     resetInput();
   };
 
